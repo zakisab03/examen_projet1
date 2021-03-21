@@ -29,5 +29,22 @@ router.route('/:id').delete((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route ('/:id').put ((req, res) => { 
+  User.findById (req.params.id) 
+    .then (users => { 
+      users.username = req.body.username; 
+      users.gendar = req.body.gendar; 
+      users.dob = Date .parse (req.body.dob);
+      users.news =   req.body.news;
+      users.email =  req.body.email;
+      users.photo =  req.body.photo;
+
+      users.save () 
+        .then (() => res.json ('user update')) 
+        .catch (err => res.status (400) .json ('Erreur:' + err)); 
+    }) 
+    .catch (err => res.status (400) .json ('Erreur:' + err)); 
+});
+
 
 module.exports = router;
