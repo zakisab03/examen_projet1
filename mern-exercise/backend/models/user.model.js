@@ -11,7 +11,7 @@ const userSchema = new Schema({
 	news : Boolean,
 	email : String,
 	photo : String,
-  	timestamps: true,
+  //timestamps: true,
 });
 
 const User = mongoose.model('User', userSchema);

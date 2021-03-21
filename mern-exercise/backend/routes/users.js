@@ -9,12 +9,25 @@ router.route('/').get((req, res) => {
 
 router.route('/add').post((req, res) => {
   const username = req.body.username;
+  const gender = req.body.gendar;
+  const dob = req.body.dob;
+  const news = req.body.news;
+  const email = req.body.email;
+  const photo = req.body.photo;
 
-  const newUser = new User({username});
+
+  const newUser = new User({username,gender,dob,news,email,photo});
 
   newUser.save()
     .then(() => res.json('User added!'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
+
+router.route('/:id').delete((req, res) => {
+  User.findByIdAndDelete(req.params.id)
+    .then(() => res.json('user deleted.'))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 
 module.exports = router;
