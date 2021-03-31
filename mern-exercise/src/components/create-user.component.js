@@ -4,13 +4,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from 'axios';
 
 
-export default class CreateUser extends Component {
 
-
-
-
+export default class newuser extends Component {
   constructor(props) {
     super(props);
+
 
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangeGender = this.onChangeGender.bind(this);
@@ -19,6 +17,8 @@ export default class CreateUser extends Component {
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePhoto = this.onChangePhoto.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+
+
 
     this.state = {
       username: '',
@@ -36,11 +36,12 @@ export default class CreateUser extends Component {
       username: '',
       gender: '',
       dob: new Date(),
-      news: '1',
+      news: '',
       email: '',
-      photo: 'x'
+      photo: ''
     });
   }
+
 
   onChangeUsername(e) {
     this.setState({
@@ -53,9 +54,9 @@ export default class CreateUser extends Component {
     });
   }
 
-  onChangeDob(dob) {
+  onChangeDob(Date) {
     this.setState({
-      dob: dob
+      dob: Date
     });
   }
 
@@ -77,71 +78,60 @@ export default class CreateUser extends Component {
     });
   }
 
-  
-
   onSubmit(e) {
     e.preventDefault();
-  
+
     const users = {
       username: this.state.username,
       gender: this.state.gender,
       dob: this.state.dob,
-      new: this.state.news,
+      news: this.state.news,
       email: this.state.email,
       photo: this.state.photo
     };
   
     console.log(users);
-    axios.post('http://localhost:5000/add/', users).then(res => console.log(res.data));
-
-    
-    //window.location = '/';
+    axios.post('http://localhost:5000/users/add/', users).then(res => console.log(res));
+    window.location = '/';
   }
 
   render() {
     return (
+      
       <div>
-        
-      <h3> Create New User  </h3>
-
-      <form onSubmit={this.onSubmit}>
-        <div className="form-group"> 
-          <label>Username: </label>
-          <input  type="text" required className="form-control" value={this.state.username} onChange={this.onChangeUsername}/>
-        </div>
-        <div className="form-group"> 
-          <label>Genre: </label>
-          <input  type="text" required className="form-control" value={this.state.gender} onChange={this.onChangeGender}/>
-        </div>
-        <div className="form-group">
-          <label>Dob: </label>
-          <div>
-            <DatePicker 
-            selected={this.state.dob} 
-            onChange={this.onChangeDob} />
+        <form onSubmit={this.onSubmit}>
+          <div className="form-group"> 
+            <label>Username: </label>
+            <input  type="text" required className="form-control" value={this.state.username} onChange={this.onChangeUsername}/>
           </div>
-        </div>
+          <div className="form-group"> 
+            <label>Genre: </label>
+            <input  type="text" required className="form-control" value={this.state.gender} onChange={this.onChangeGender}/>
+          </div>
+          <div className="form-group">
+            <label>Dob: </label>
+            <div>
+              <DatePicker selected={this.state.dob} onChange={this.onChangeDob} />
+            </div>
+          </div>
+          <div className="form-group"> 
+            <label>News: </label>
+            <input  type="text" required className="form-control" value={this.state.news} onChange={this.onChangeNews}/>
+          </div>
+          <div className="form-group"> 
+            <label>Email: </label>
+            <input  type="text" required className="form-control" value={this.state.email} onChange={this.onChangeEmail}/>
+          </div>
+          <div className="form-group"> 
+            <label>Photo: </label>
+            <input  type="text" required className="form-control" value={this.state.photo} onChange={this.onChangePhoto}/>
+          </div>
+          <div className="form-group">
+            <input type="submit" value="Add User" className="btn btn-primary" />
+          </div>
 
-        <div className="form-group"> 
-          <label>News: </label>
-          <input  type="text" required className="form-control" value={this.state.news} onChange={this.onChangeNews}/>
-        </div>
-
-        <div className="form-group"> 
-          <label>Email: </label>
-          <input  type="text" required className="form-control" value={this.state.email} onChange={this.onChangeEmail}/>
-        </div>
-
-        <div className="form-group"> 
-          <label>Photo: </label>
-          <input  type="text" required className="form-control" value={this.state.photo} onChange={this.onChangePhoto}/>
-        </div>
-
-        <div className="form-group">
-          <input type="submit" value="Add User" className="btn btn-primary" />
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
     )
   }
 }
